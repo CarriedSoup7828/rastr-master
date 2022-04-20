@@ -37,43 +37,78 @@ public class Main extends JFrame implements MouseListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        WritableRaster r = image.getRaster() ;
-        int [] pixel = new int[3];
-        for (int y=0 ; y < image.getHeight() ; y++)
-            for (int x=0 ; x < image.getWidth() ; x++) {
+//        WritableRaster r = image.getRaster();
+//        int[] pixel = new int[3];
+//        int[] get = new int[256];
+//        for (int y = 0; y < image.getHeight(); y++)
+//            for (int x = 0; x < image.getWidth(); x++) {
+//                r.getPixel(x, y, pixel);
+//
+//                int R = pixel[2];
+//                int G = pixel[1];
+//                int B = pixel[0];
+//
+//                get[G] += 1;
+//            }
+//        pixel[2] = 0;
+//        pixel[1] = 255;
+//        pixel[0] = 0;
+//        for (int x = 0; x < 256; x++) {
+//            for (int j = 0; j < get[x]/20; j++) {
+//                r.setPixel(x, (image.getHeight() - j)/10, pixel);
+//
+//            }
+//
+//        }
+        WritableRaster r = image.getRaster();
+        int[] pixel = new int[3];
+        int[] get = new int[256];
+        for (int y = 0; y < image.getHeight(); y++)
+            for (int x = 0; x < image.getWidth()-1; x++) {
                 r.getPixel(x, y, pixel);
-
                 int R = pixel[2];
                 int G = pixel[1];
                 int B = pixel[0];
-              if (R*1.1>=255) {
-                  R = 255;
-              }
-              else {
-                  R = (int) (R * 1.1);
-              }
-              if (B*1.1>=255){
-                  B=255;}
-              else {
-                  B=(int) (B*1.1);
-              }
-              if (G*1.1>=255){
-                  G=255;}
-              else {
-                  G=(int) (G*1.1);
-              }
-              int H = image.getHeight();
-              int W = image.getWidth();
-              if (y<x*H/W && y>-x*H/W+H|| y>x*H/W && y <-x*H/W+H){
-                  pixel[2]=255;
-                  pixel[1]=0;
-                  pixel[0]=255;
-              }
+
+                r.getPixel(x+1, y, pixel);
+                int R1 = pixel[2];
+                int G1 = pixel[1];
+                int B1 = pixel[0];
+
+                pixel[2]=R1-R+128;
+                pixel[1]=G1-G+128;
+                pixel[0]=B1-B+128;
                 r.setPixel(x, y, pixel);
             }
-        repaint();
 
-}
+        repaint();
+//              if (R*1.1>=255) {
+//                  R = 255;
+//              }
+//              else {
+//                  R = (int) (R * 1.1);
+//              }
+//              if (B*1.1>=255){
+//                  B=255;}
+//              else {
+//                  B=(int) (B*1.1);
+//              }
+//              if (G*1.1>=255){
+//                  G=255;}
+//              else {
+//                  G=(int) (G*1.1);
+//              }
+//              int H = image.getHeight();
+//              int W = image.getWidth();
+//              if (y<x*H/W && y>-x*H/W+H|| y>x*H/W && y <-x*H/W+H){
+//                  pixel[2]=255;
+//                  pixel[1]=0;
+//                  pixel[0]=255;
+//              }
+//                r.setPixel(x, y, pixel);
+//            }
+
+    }
     @Override
     public void mousePressed(MouseEvent e) {}
     @Override
